@@ -1,0 +1,49 @@
+work_dir: /home/ubuntu/users/znc/skeleton/multissn-gcn/worj/20
+
+# feeder
+feeder: feeders.feeder_ntus.Feeder
+train_feeder_args:
+  data_path: /mnt/DataDrive54-1/Event_Skeleton/NTU60_CS.npz
+  split: train
+  debug: False
+  random_choose: False
+  random_shift: False
+  random_move: False
+  window_size: 16
+  normalization: False
+  random_rot: True
+  p_interval: [0.5, 1]
+  vel: True
+  bone: False
+test_feeder_args:
+  data_path: /mnt/DataDrive54-1/Event_Skeleton/NTU60_CS.npz
+  split: test
+  window_size: 16
+  p_interval: [0.95]
+  vel: True
+  bone: False
+  debug: False
+
+# model
+model: model.signalgcn.Model
+model_args:
+  num_class: 60
+  num_point: 25
+  num_person: 2
+  graph: graph.ntu_rgb_d.Graph
+  graph_args:
+    labeling_mode: 'spatial'
+
+#optim
+weight_decay: 0.00001
+base_lr: 0.1
+lr_decay_rate:  0.1
+step: [50,100,130,160]
+warm_up_epoch: 0
+
+# training
+device: [3]
+batch_size: 1
+test_batch_size: 1
+num_epoch: 300
+nesterov: True
